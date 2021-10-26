@@ -28,3 +28,9 @@ div {
 .cities-list {
   width: 100%;
 }
+.forecast-container {
+  position: absolute;
+  top: 150px;
+  padding: 20px;
+  background-color: #f8f9fa;
+}

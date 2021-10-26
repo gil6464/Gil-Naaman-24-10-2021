@@ -11,7 +11,7 @@ function CitiesList({ filteredList, chooseCity }) {
             className="cities-list"
             onClick={() => chooseCity(city)}
           >
-            {city}
+            {city.LocalizedName}
           </ListGroup.Item>
         );
       })}
