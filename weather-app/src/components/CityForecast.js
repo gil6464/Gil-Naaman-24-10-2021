@@ -271,6 +271,10 @@ const fiveWeatherData = {
 
 function CityForecast({ cityKey, cityName }) {
   const [celsius, setCelsius] = useState(true);
+
+  const calcCelsius = temp => {
+    return Math.round((temp - 32) * (5 / 9));
+  };
   const getCurrentWeather = async () => {
     const { data } = await axios.get(
       `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${apiKey}`
@@ -288,7 +292,7 @@ function CityForecast({ cityKey, cityName }) {
     // getCurrentWeather();
     // getFiveDayForecast();
   }, []);
-  console.log(currentWeatherData[0].Temperature.Metric.Value);
+
   return (
     <Container className="forecast-container">
       <Row>
@@ -308,26 +312,15 @@ function CityForecast({ cityKey, cityName }) {
         </Col>
       </Row>
       <Row>
-        <Col sm>
-          With supporting text below as a natural lead-in to additional content.
-          With supporting text below as a natural lead-in to additional content.
-        </Col>
-        <Col sm>
-          With supporting text below as a natural lead-in to additional content.
-          With supporting text below as a natural lead-in to additional content.
-        </Col>
-        <Col sm>
-          With supporting text below as a natural lead-in to additional content.
-          With supporting text below as a natural lead-in to additional content.
-        </Col>
-        <Col sm>
-          With supporting text below as a natural lead-in to additional content.
-          With supporting text below as a natural lead-in to additional content.
-        </Col>
-        <Col sm>
-          With supporting text below as a natural lead-in to additional content.
-          With supporting text below as a natural lead-in to additional content.
-        </Col>
+        {fiveWeatherData.DailyForecasts.map((day, i) => {
+          console.log(day);
+          return (
+            <Col key={i}>
+              {" "}
+              {day.Temperature.Maximum.Value}-{day.Temperature.Minimum.Value}
+            </Col>
+          );
+        })}
       </Row>
     </Container>
   );
