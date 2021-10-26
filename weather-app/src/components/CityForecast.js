@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
 const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
 
@@ -301,19 +300,10 @@ function CityForecast({ cityKey, cityName }) {
           {celsius
             ? currentWeatherData[0].Temperature.Metric.Value + "C°"
             : currentWeatherData[0].Temperature.Imperial.Value + "F°"}
-          <BootstrapSwitchButton
-            checked={false}
-            onlabel="F°"
-            offlabel="C°"
-            onstyle="outline-primary"
-            offstyle="outline-primary"
-            onChange={() => setCelsius(!celsius)}
-          />
         </Col>
       </Row>
       <Row>
         {fiveWeatherData.DailyForecasts.map((day, i) => {
-          console.log(day);
           return (
             <Col key={i}>
               {" "}

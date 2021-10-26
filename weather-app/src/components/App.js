@@ -5,9 +5,23 @@ import Favorites from "./Favorites";
 import Home from "./Home";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
-// className={darkMode ? "dark-mode" : "light-mode"}
+import { useSelector, useDispatch } from "react-redux";
+import { changeToCelsius, changeToFahrenheit } from "../actions/";
+
 function App() {
+  const dispatch = useDispatch();
+  const degreeCurrency = useSelector(state => state.degreeCurrency);
+
+  const changeDegreeCurrency = () => {
+    if (degreeCurrency === "Celsius") {
+      return dispatch(changeToFahrenheit());
+    }
+
+    return dispatch(changeToCelsius());
+  };
+
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -16,6 +30,16 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="favorites">Favorites</Nav.Link>
+            <div className="switch-button">
+              <BootstrapSwitchButton
+                checked={false}
+                onlabel="F°"
+                offlabel="C°"
+                onstyle="outline-primary"
+                offstyle="outline-primary"
+                onChange={() => changeDegreeCurrency()}
+              />
+            </div>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
