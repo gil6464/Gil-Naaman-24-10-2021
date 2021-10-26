@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
-
-const rootReducer = combineReducers({});
+import changeDegreeCurrency from "./changeDegreeCurrency";
+const rootReducer = combineReducers({
+  changeDegreeCurrency,
+});
 
 export default rootReducer;
