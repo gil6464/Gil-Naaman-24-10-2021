@@ -3,6 +3,7 @@ import axios from "axios";
 import { Container, Row, Col, InputGroup, FormControl } from "react-bootstrap";
 import CitiesList from "./CitiesList";
 import CityForecast from "./CityForecast";
+const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
 
 const data = [
   {
@@ -165,6 +166,13 @@ function Home() {
   const [filteredList, setFilteredList] = useState([]);
   const [userTyping, setUserTyping] = useState(false);
 
+  // const getCities = async () => {
+  //   const { data } = await axios.get(
+  //     `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${apiKey}&q=${cityName}`
+  //   );
+  //   setFilteredList(data);
+  // };
+
   useEffect(() => {
     if (!cityName) return setUserTyping(false);
 
@@ -172,10 +180,8 @@ function Home() {
       return search.LocalizedName.toLowerCase().includes(cityName);
     });
     setFilteredList(response);
-    // const dataFromAPI = await axios.get(
-    //   `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc&q=${city}`
-    // );
-    // console.log(dataFromAPI);
+
+    // getCities();
   }, [cityName]);
 
   const chooseCity = chosenCity => {

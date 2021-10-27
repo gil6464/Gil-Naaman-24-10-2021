@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import FiveDaysForecast from "./FiveDaysForecast";
 
 const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
 
@@ -268,23 +270,48 @@ const fiveWeatherData = {
   ],
 };
 
-function CityForecast({ cityKey, cityName }) {
-  const [celsius, setCelsius] = useState(true);
+const calcCelsius = temp => {
+  return Math.round((temp - 32) * (5 / 9));
+};
 
-  const calcCelsius = temp => {
-    return Math.round((temp - 32) * (5 / 9));
-  };
+const pictures = {
+  snow: "https://ssl.gstatic.com/onebox/weather/48/snow.png",
+  cold: "https://ssl.gstatic.com/onebox/weather/48/rain_s_cloudy.png",
+  warm: "https://ssl.gstatic.com/onebox/weather/48/partly_cloudy.png",
+  hot: "https://ssl.gstatic.com/onebox/weather/48/sunny.png",
+};
+
+const getForecastImage = temp => {
+  temp = calcCelsius(temp);
+  if (temp < 0) {
+    return pictures.snow;
+  }
+  if (temp < 10) {
+    return pictures.cold;
+  }
+  if (temp < 20) {
+    return pictures.warm;
+  }
+  return pictures.hot;
+};
+
+function CityForecast({ cityKey, cityName }) {
+  const degreeCurrency = useSelector(state => state.degreeCurrency);
+  const [currentWeather, setCurrentWeather] = useState(currentWeatherData);
+  const [fiveDayForecast, setFiveDayForecast] = useState(fiveWeatherData);
+
   const getCurrentWeather = async () => {
     const { data } = await axios.get(
       `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${apiKey}`
     );
-    console.log(data);
+    setCurrentWeather(data);
   };
+
   const getFiveDayForecast = async () => {
     const { data } = await axios.get(
       `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${apiKey}`
     );
-    console.log(data);
+    setFiveDayForecast(data);
   };
   useEffect(() => {
     if (!cityKey) return;
@@ -294,24 +321,23 @@ function CityForecast({ cityKey, cityName }) {
 
   return (
     <Container className="forecast-container">
-      <Row>
+      <Row className="today-container">
         <Col>
-          {cityName} Forecast! Today Current Weather :{" "}
-          {celsius
-            ? currentWeatherData[0].Temperature.Metric.Value + "C°"
-            : currentWeatherData[0].Temperature.Imperial.Value + "F°"}
+          {cityName} Forecast! Today Current Weather :
+          {degreeCurrency === "Celsius"
+            ? currentWeather[0].Temperature.Metric.Value + "C°"
+            : currentWeather[0].Temperature.Imperial.Value + "F°"}
+          <img
+            src={getForecastImage(currentWeather[0].Temperature.Imperial.Value)}
+            alt="weather"
+          />
         </Col>
       </Row>
-      <Row>
-        {fiveWeatherData.DailyForecasts.map((day, i) => {
-          return (
-            <Col key={i}>
-              {" "}
-              {day.Temperature.Maximum.Value}-{day.Temperature.Minimum.Value}
-            </Col>
-          );
-        })}
-      </Row>
+      <FiveDaysForecast
+        fiveDayForecast={fiveDayForecast}
+        calcCelsius={calcCelsius}
+        getForecastImage={getForecastImage}
+      />
     </Container>
   );
 }

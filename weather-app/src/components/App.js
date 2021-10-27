@@ -6,7 +6,7 @@ import Home from "./Home";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
-
+//* Redux
 import { useSelector, useDispatch } from "react-redux";
 import { changeToCelsius, changeToFahrenheit } from "../actions/";
 

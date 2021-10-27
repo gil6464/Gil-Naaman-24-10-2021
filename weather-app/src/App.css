@@ -30,11 +30,14 @@ div {
 }
 .forecast-container {
   position: absolute;
-  height: 230px;
+  height: 180px;
   min-height: max-content;
   top: 150px;
   padding: 20px;
   background-color: #f8f9fa;
+}
+.today-container {
+  min-height: 25%;
 }
 .switch-button {
   position: absolute;
