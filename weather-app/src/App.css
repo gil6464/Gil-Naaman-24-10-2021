@@ -30,7 +30,7 @@ div {
 }
 .forecast-container {
   position: absolute;
-  height: 180px;
+  height: fit-content;
   min-height: max-content;
   top: 150px;
   padding: 20px;
@@ -46,4 +46,16 @@ div {
 .add-to-favorites {
   margin-left: auto;
   margin-right: 0%;
+}
+.favorites-container {
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  height: fit-content;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+.favorites {
+  justify-content: center;
+  text-align: center;
 }

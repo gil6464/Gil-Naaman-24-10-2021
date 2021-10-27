@@ -317,8 +317,10 @@ function CityForecast({ cityKey, cityName }) {
   };
 
   const findIfFavorite = () => {
-    const isFavorite = favoritesCities.some(city => city.cityKey === cityKey);
-    setIsFavorite(isFavorite);
+    const isCityFavorite = favoritesCities.some(
+      city => city.cityKey === cityKey
+    );
+    setIsFavorite(isCityFavorite);
   };
 
   const setFavorite = () => {
@@ -359,25 +361,14 @@ function CityForecast({ cityKey, cityName }) {
           />
         </Col>
         <Col xs={5} md={3}>
-          {isFavorite ? (
-            <Button
-              onClick={() => {
-                setFavorite();
-              }}
-            >
-              Remove from Favorites!
-              {<MdFavorite />}
-            </Button>
-          ) : (
-            <Button
-              onClick={() => {
-                setFavorite();
-              }}
-            >
-              Add to Favorites!
-              {<MdOutlineFavoriteBorder />}
-            </Button>
-          )}
+          <Button
+            onClick={() => {
+              setFavorite();
+            }}
+          >
+            {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+            {isFavorite ? <MdFavorite /> : <MdOutlineFavoriteBorder />}
+          </Button>
         </Col>
       </Row>
       <FiveDaysForecast

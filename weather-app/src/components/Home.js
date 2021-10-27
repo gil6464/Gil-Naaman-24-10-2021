@@ -4,7 +4,7 @@ import { Container, Row, Col, InputGroup, FormControl } from "react-bootstrap";
 import CitiesList from "./CitiesList";
 import CityForecast from "./CityForecast";
 //* React Toastify
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
