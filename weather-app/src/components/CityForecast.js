@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, Row, Col } from "react-bootstrap";
+import { Button, Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import FiveDaysForecast from "./FiveDaysForecast";
-
+import { MdFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
 
 const currentWeatherData = [
@@ -299,6 +299,8 @@ function CityForecast({ cityKey, cityName }) {
   const degreeCurrency = useSelector(state => state.degreeCurrency);
   const [currentWeather, setCurrentWeather] = useState(currentWeatherData);
   const [fiveDayForecast, setFiveDayForecast] = useState(fiveWeatherData);
+  const [favoritesCities, setFavoritesCities] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const getCurrentWeather = async () => {
     const { data } = await axios.get(
@@ -313,16 +315,40 @@ function CityForecast({ cityKey, cityName }) {
     );
     setFiveDayForecast(data);
   };
+
+  const findIfFavorite = () => {
+    const isFavorite = favoritesCities.some(city => city.cityKey === cityKey);
+    setIsFavorite(isFavorite);
+  };
+
+  const setFavorite = () => {
+    let newFavorites = [];
+    if (isFavorite) {
+      newFavorites = favoritesCities.filter(city => city.cityKey !== cityKey);
+    } else {
+      newFavorites = [...favoritesCities, { cityKey, cityName }];
+    }
+    localStorage.setItem("favoritesCities", JSON.stringify(newFavorites));
+    setFavoritesCities(newFavorites);
+    setIsFavorite(!isFavorite);
+  };
+
   useEffect(() => {
+    const cities = JSON.parse(localStorage.getItem("favoritesCities")) || [];
+    setFavoritesCities(cities);
     if (!cityKey) return;
     // getCurrentWeather();
     // getFiveDayForecast();
   }, []);
 
+  useEffect(() => {
+    findIfFavorite();
+  }, [favoritesCities]);
+
   return (
     <Container className="forecast-container">
       <Row className="today-container">
-        <Col>
+        <Col xs={12} md={8}>
           {cityName} Forecast! Today Current Weather :
           {degreeCurrency === "Celsius"
             ? currentWeather[0].Temperature.Metric.Value + "C°"
@@ -331,6 +357,27 @@ function CityForecast({ cityKey, cityName }) {
             src={getForecastImage(currentWeather[0].Temperature.Imperial.Value)}
             alt="weather"
           />
+        </Col>
+        <Col xs={5} md={3}>
+          {isFavorite ? (
+            <Button
+              onClick={() => {
+                setFavorite();
+              }}
+            >
+              Remove from Favorites!
+              {<MdFavorite />}
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setFavorite();
+              }}
+            >
+              Add to Favorites!
+              {<MdOutlineFavoriteBorder />}
+            </Button>
+          )}
         </Col>
       </Row>
       <FiveDaysForecast

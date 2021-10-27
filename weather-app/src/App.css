@@ -43,3 +43,7 @@ div {
   position: absolute;
   right: 50px;
 }
+.add-to-favorites {
+  margin-left: auto;
+  margin-right: 0%;
+}

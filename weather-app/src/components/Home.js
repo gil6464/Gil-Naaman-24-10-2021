@@ -180,8 +180,10 @@ function Home() {
   };
 
   useEffect(() => {
-    if (!cityName) return setUserTyping(false);
-
+    if (!cityName) {
+      setCityKey(null);
+      return setUserTyping(false);
+    }
     const response = data.filter(search => {
       return search.LocalizedName.toLowerCase().includes(cityName);
     });
@@ -198,7 +200,7 @@ function Home() {
     setCityKey(chosenCity.Key);
     setUserTyping(false);
   };
-
+  //* This function set the city name, and allow only english letters.
   const setName = value => {
     value = value.replace(/[^A-Za-z]/gi, " ");
     if (value !== searchInput.current.value) {
@@ -210,6 +212,7 @@ function Home() {
     }
     setCityName(value);
   };
+
   const notifyOnlyEnglish = () => {
     toast.error("Only English Allowed!!", {
       position: "top-right",
