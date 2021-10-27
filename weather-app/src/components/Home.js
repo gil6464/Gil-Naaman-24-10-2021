@@ -3,6 +3,10 @@ import axios from "axios";
 import { Container, Row, Col, InputGroup, FormControl } from "react-bootstrap";
 import CitiesList from "./CitiesList";
 import CityForecast from "./CityForecast";
+//* React Toastify
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
 
 const data = [
@@ -158,6 +162,8 @@ const data = [
   },
 ];
 
+toast.configure();
+
 function Home() {
   const searchInput = useRef();
 
@@ -166,12 +172,12 @@ function Home() {
   const [filteredList, setFilteredList] = useState([]);
   const [userTyping, setUserTyping] = useState(false);
 
-  // const getCities = async () => {
-  //   const { data } = await axios.get(
-  //     `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${apiKey}&q=${cityName}`
-  //   );
-  //   setFilteredList(data);
-  // };
+  const getCities = async () => {
+    const { data } = await axios.get(
+      `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${apiKey}&q=${cityName}`
+    );
+    setFilteredList(data);
+  };
 
   useEffect(() => {
     if (!cityName) return setUserTyping(false);
@@ -192,6 +198,30 @@ function Home() {
     setCityKey(chosenCity.Key);
     setUserTyping(false);
   };
+
+  const setName = value => {
+    value = value.replace(/[^A-Za-z]/gi, " ");
+    if (value !== searchInput.current.value) {
+      searchInput.current.value = "";
+      searchInput.current.focus();
+      setUserTyping(false);
+      notifyOnlyEnglish();
+      return;
+    }
+    setCityName(value);
+  };
+  const notifyOnlyEnglish = () => {
+    toast.error("Only English Allowed!!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <Container className="search-field">
       <Row>
@@ -204,8 +234,8 @@ function Home() {
               aria-label="Small"
               aria-describedby="inputGroup-sizing-sm"
               onChange={e => {
-                setCityName(e.target.value);
                 setUserTyping(true);
+                setName(e.target.value);
               }}
               ref={searchInput}
               placeholder="Search for a city"

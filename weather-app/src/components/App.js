@@ -6,6 +6,7 @@ import Home from "./Home";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
+import { RiFahrenheitLine, RiCelsiusLine } from "react-icons/ri";
 //* Redux
 import { useSelector, useDispatch } from "react-redux";
 import { changeToCelsius, changeToFahrenheit } from "../actions/";
@@ -33,8 +34,8 @@ function App() {
             <div className="switch-button">
               <BootstrapSwitchButton
                 checked={false}
-                onlabel="F°"
-                offlabel="C°"
+                onlabel={<RiFahrenheitLine />}
+                offlabel={<RiCelsiusLine />}
                 onstyle="outline-primary"
                 offstyle="outline-primary"
                 onChange={() => changeDegreeCurrency()}
