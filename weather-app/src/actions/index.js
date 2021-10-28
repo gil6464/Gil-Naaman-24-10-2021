@@ -9,3 +9,10 @@ export const changeToFahrenheit = () => {
     type: "FAHRENHEIT",
   };
 };
+
+export const setCityKey = cityKey => {
+  return {
+    type: "SET_CITY_KEY",
+    payload: cityKey,
+  };
+};

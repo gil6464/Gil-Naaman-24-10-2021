@@ -50,9 +50,9 @@ div {
 .favorites-container {
   position: absolute;
   top: 25%;
-  left: 10%;
-  height: fit-content;
-  padding: 20px;
+  left: 8%;
+  right: 8%;
+  padding: 1%;
   background-color: #f8f9fa;
 }
 .favorites {

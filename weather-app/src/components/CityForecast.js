@@ -296,7 +296,9 @@ const getForecastImage = temp => {
 };
 
 function CityForecast({ cityKey, cityName }) {
+  //* Get the currency from redux;
   const degreeCurrency = useSelector(state => state.degreeCurrency);
+
   const [currentWeather, setCurrentWeather] = useState(currentWeatherData);
   const [fiveDayForecast, setFiveDayForecast] = useState(fiveWeatherData);
   const [favoritesCities, setFavoritesCities] = useState([]);
