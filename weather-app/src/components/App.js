@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -17,12 +18,22 @@ function App() {
 
   const changeDegreeCurrency = () => {
     if (degreeCurrency === "Celsius") {
+      localStorage.setItem("degreeCurrency", "Fahrenheit");
       return dispatch(changeToFahrenheit());
     }
-
+    localStorage.setItem("degreeCurrency", "Celsius");
     return dispatch(changeToCelsius());
   };
 
+  useEffect(() => {
+    const userDegreeCurrency =
+      localStorage.getItem("degreeCurrency") || "Celsius";
+    if (userDegreeCurrency === "Celsius") {
+      dispatch(changeToCelsius());
+    } else {
+      dispatch(changeToFahrenheit());
+    }
+  }, []);
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -33,7 +44,7 @@ function App() {
             <Nav.Link href="favorites">Favorites</Nav.Link>
             <div className="switch-button">
               <BootstrapSwitchButton
-                checked={false}
+                checked={degreeCurrency !== "Celsius"}
                 onlabel={<RiFahrenheitLine />}
                 offlabel={<RiCelsiusLine />}
                 onstyle="outline-primary"

@@ -319,9 +319,9 @@ function CityForecast({ cityKey, cityName }) {
   };
 
   const findIfFavorite = () => {
-    const isCityFavorite = favoritesCities.some(
-      city => city.cityKey === cityKey
-    );
+    const isCityFavorite = favoritesCities.some(city => {
+      return city.cityKey === cityKey;
+    });
     setIsFavorite(isCityFavorite);
   };
 
@@ -340,7 +340,7 @@ function CityForecast({ cityKey, cityName }) {
   useEffect(() => {
     const cities = JSON.parse(localStorage.getItem("favoritesCities")) || [];
     setFavoritesCities(cities);
-    if (!cityKey) return;
+    findIfFavorite();
     // getCurrentWeather();
     // getFiveDayForecast();
   }, []);

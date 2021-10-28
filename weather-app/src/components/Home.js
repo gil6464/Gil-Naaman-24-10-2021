@@ -6,7 +6,8 @@ import CityForecast from "./CityForecast";
 //* React Toastify
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useSelector, useDispatch } from "react-redux";
+import { setCityName, setCityKey } from "../actions";
 const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
 
 const data = [
@@ -165,10 +166,12 @@ const data = [
 toast.configure();
 
 function Home() {
+  const dispatch = useDispatch();
   const searchInput = useRef();
 
-  const [cityName, setCityName] = useState("");
-  const [cityKey, setCityKey] = useState("");
+  const cityName = useSelector(state => state.cityName);
+  const cityKey = useSelector(state => state.cityKey);
+
   const [filteredList, setFilteredList] = useState([]);
   const [userTyping, setUserTyping] = useState(false);
 
@@ -181,7 +184,8 @@ function Home() {
 
   useEffect(() => {
     if (!cityName) {
-      setCityKey(null);
+      dispatch(setCityKey("215854"));
+      dispatch(setCityName("Tel Aviv"));
       return setUserTyping(false);
     }
     const response = data.filter(search => {
@@ -196,10 +200,11 @@ function Home() {
     searchInput.current.value = chosenCity.LocalizedName;
     searchInput.current.focus();
     setFilteredList([]);
-    setCityName(chosenCity.LocalizedName);
-    setCityKey(chosenCity.Key);
+    dispatch(setCityName(chosenCity.LocalizedName));
+    dispatch(setCityKey(chosenCity.Key));
     setUserTyping(false);
   };
+
   //* This function set the city name, and allow only english letters.
   const setName = value => {
     value = value.replace(/[^A-Za-z]/gi, " ");
@@ -210,7 +215,7 @@ function Home() {
       notifyOnlyEnglish();
       return;
     }
-    setCityName(value);
+    dispatch(setCityName(value));
   };
 
   const notifyOnlyEnglish = () => {

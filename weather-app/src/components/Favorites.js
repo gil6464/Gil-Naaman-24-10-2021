@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { setCityKey } from "../actions";
+import { setCityKey, setCityName } from "../actions";
 import { Redirect } from "react-router-dom";
 
 const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
@@ -66,10 +66,13 @@ function Favorites() {
   const dispatch = useDispatch();
 
   const degreeCurrency = useSelector(state => state.degreeCurrency);
+
   const [favoritesData, setFavoritesData] = useState([]);
   const [redirect, setRedirect] = useState(false);
-  const redirectToHome = cityKey => {
+
+  const redirectToHome = (cityKey, cityName) => {
     dispatch(setCityKey(cityKey));
+    dispatch(setCityName(cityName));
     setRedirect(true);
   };
   const getCurrentWeather = async cityKey => {
@@ -84,13 +87,18 @@ function Favorites() {
       localStorage.getItem("favoritesCities") || []
     );
     if (favoritesList.length <= 0) return;
-    // const citiesData = favoritesList.map(async city => {
-    // city.currentWeather = await getCurrentWeather(city.cityKey);
     const citiesData = favoritesList.map(city => {
       city.currentWeather = getMockData();
       return city;
     });
     setFavoritesData(citiesData);
+    // const citiesData = favoritesList.map(async city => {
+    //   city.currentWeather = await getCurrentWeather(city.cityKey);
+    //   return city;
+    // });
+    // Promise.all(citiesData).then(data => {
+    //   setFavoritesData(data);
+    // });
   }, []);
 
   if (redirect) {
@@ -107,7 +115,9 @@ function Favorites() {
             return (
               <Col key={i}>
                 <Col>
-                  <Button onClick={() => redirectToHome(city.cityKey)}>
+                  <Button
+                    onClick={() => redirectToHome(city.cityKey, city.cityName)}
+                  >
                     {" "}
                     {city.cityName}
                   </Button>{" "}

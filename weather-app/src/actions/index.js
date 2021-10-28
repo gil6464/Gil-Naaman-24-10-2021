@@ -16,3 +16,10 @@ export const setCityKey = cityKey => {
     payload: cityKey,
   };
 };
+
+export const setCityName = cityName => {
+  return {
+    type: "SET_CITY_NAME",
+    payload: cityName,
+  };
+};
