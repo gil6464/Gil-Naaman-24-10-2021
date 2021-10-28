@@ -7,160 +7,160 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setCityName, setCityKey } from "../actions";
-const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
+const apiKey = "OGq6iamWHZpMSXsUHbd3CtTkpxl5UGhZ";
 
-const data = [
-  {
-    Version: 1,
-    Key: "113487",
-    Type: "City",
-    Rank: 10,
-    LocalizedName: "Kinshasa",
-    Country: {
-      ID: "CD",
-      LocalizedName: "Democratic Republic of the Congo",
-    },
-    AdministrativeArea: {
-      ID: "KN",
-      LocalizedName: "Kinshasa",
-    },
-  },
-  {
-    Version: 1,
-    Key: "106812",
-    Type: "City",
-    Rank: 11,
-    LocalizedName: "Kunming",
-    Country: {
-      ID: "CN",
-      LocalizedName: "China",
-    },
-    AdministrativeArea: {
-      ID: "YN",
-      LocalizedName: "Yunnan",
-    },
-  },
-  {
-    Version: 1,
-    Key: "206690",
-    Type: "City",
-    Rank: 11,
-    LocalizedName: "Kolkata",
-    Country: {
-      ID: "IN",
-      LocalizedName: "India",
-    },
-    AdministrativeArea: {
-      ID: "WB",
-      LocalizedName: "West Bengal",
-    },
-  },
-  {
-    Version: 1,
-    Key: "261158",
-    Type: "City",
-    Rank: 11,
-    LocalizedName: "Karachi",
-    Country: {
-      ID: "PK",
-      LocalizedName: "Pakistan",
-    },
-    AdministrativeArea: {
-      ID: "SD",
-      LocalizedName: "Sindh",
-    },
-  },
-  {
-    Version: 1,
-    Key: "102677",
-    Type: "City",
-    Rank: 15,
-    LocalizedName: "Kaifeng",
-    Country: {
-      ID: "CN",
-      LocalizedName: "China",
-    },
-    AdministrativeArea: {
-      ID: "HA",
-      LocalizedName: "Henan",
-    },
-  },
-  {
-    Version: 1,
-    Key: "2580069",
-    Type: "City",
-    Rank: 15,
-    LocalizedName: "Kashgar Prefecture",
-    Country: {
-      ID: "CN",
-      LocalizedName: "China",
-    },
-    AdministrativeArea: {
-      ID: "XJ",
-      LocalizedName: "Xinjiang",
-    },
-  },
-  {
-    Version: 1,
-    Key: "4361",
-    Type: "City",
-    Rank: 20,
-    LocalizedName: "Kabul",
-    Country: {
-      ID: "AF",
-      LocalizedName: "Afghanistan",
-    },
-    AdministrativeArea: {
-      ID: "KAB",
-      LocalizedName: "Kabul",
-    },
-  },
-  {
-    Version: 1,
-    Key: "233776",
-    Type: "City",
-    Rank: 20,
-    LocalizedName: "Kuala Lumpur",
-    Country: {
-      ID: "MY",
-      LocalizedName: "Malaysia",
-    },
-    AdministrativeArea: {
-      ID: "14",
-      LocalizedName: "Kuala Lumpur",
-    },
-  },
-  {
-    Version: 1,
-    Key: "308406",
-    Type: "City",
-    Rank: 20,
-    LocalizedName: "Khartoum",
-    Country: {
-      ID: "SD",
-      LocalizedName: "Sudan",
-    },
-    AdministrativeArea: {
-      ID: "KH",
-      LocalizedName: "Khartoum",
-    },
-  },
-  {
-    Version: 1,
-    Key: "318416",
-    Type: "City",
-    Rank: 20,
-    LocalizedName: "Kampala",
-    Country: {
-      ID: "UG",
-      LocalizedName: "Uganda",
-    },
-    AdministrativeArea: {
-      ID: "102",
-      LocalizedName: "Kampala",
-    },
-  },
-];
+// const data = [
+//   {
+//     Version: 1,
+//     Key: "113487",
+//     Type: "City",
+//     Rank: 10,
+//     LocalizedName: "Kinshasa",
+//     Country: {
+//       ID: "CD",
+//       LocalizedName: "Democratic Republic of the Congo",
+//     },
+//     AdministrativeArea: {
+//       ID: "KN",
+//       LocalizedName: "Kinshasa",
+//     },
+//   },
+//   {
+//     Version: 1,
+//     Key: "106812",
+//     Type: "City",
+//     Rank: 11,
+//     LocalizedName: "Kunming",
+//     Country: {
+//       ID: "CN",
+//       LocalizedName: "China",
+//     },
+//     AdministrativeArea: {
+//       ID: "YN",
+//       LocalizedName: "Yunnan",
+//     },
+//   },
+//   {
+//     Version: 1,
+//     Key: "206690",
+//     Type: "City",
+//     Rank: 11,
+//     LocalizedName: "Kolkata",
+//     Country: {
+//       ID: "IN",
+//       LocalizedName: "India",
+//     },
+//     AdministrativeArea: {
+//       ID: "WB",
+//       LocalizedName: "West Bengal",
+//     },
+//   },
+//   {
+//     Version: 1,
+//     Key: "261158",
+//     Type: "City",
+//     Rank: 11,
+//     LocalizedName: "Karachi",
+//     Country: {
+//       ID: "PK",
+//       LocalizedName: "Pakistan",
+//     },
+//     AdministrativeArea: {
+//       ID: "SD",
+//       LocalizedName: "Sindh",
+//     },
+//   },
+//   {
+//     Version: 1,
+//     Key: "102677",
+//     Type: "City",
+//     Rank: 15,
+//     LocalizedName: "Kaifeng",
+//     Country: {
+//       ID: "CN",
+//       LocalizedName: "China",
+//     },
+//     AdministrativeArea: {
+//       ID: "HA",
+//       LocalizedName: "Henan",
+//     },
+//   },
+//   {
+//     Version: 1,
+//     Key: "2580069",
+//     Type: "City",
+//     Rank: 15,
+//     LocalizedName: "Kashgar Prefecture",
+//     Country: {
+//       ID: "CN",
+//       LocalizedName: "China",
+//     },
+//     AdministrativeArea: {
+//       ID: "XJ",
+//       LocalizedName: "Xinjiang",
+//     },
+//   },
+//   {
+//     Version: 1,
+//     Key: "4361",
+//     Type: "City",
+//     Rank: 20,
+//     LocalizedName: "Kabul",
+//     Country: {
+//       ID: "AF",
+//       LocalizedName: "Afghanistan",
+//     },
+//     AdministrativeArea: {
+//       ID: "KAB",
+//       LocalizedName: "Kabul",
+//     },
+//   },
+//   {
+//     Version: 1,
+//     Key: "233776",
+//     Type: "City",
+//     Rank: 20,
+//     LocalizedName: "Kuala Lumpur",
+//     Country: {
+//       ID: "MY",
+//       LocalizedName: "Malaysia",
+//     },
+//     AdministrativeArea: {
+//       ID: "14",
+//       LocalizedName: "Kuala Lumpur",
+//     },
+//   },
+//   {
+//     Version: 1,
+//     Key: "308406",
+//     Type: "City",
+//     Rank: 20,
+//     LocalizedName: "Khartoum",
+//     Country: {
+//       ID: "SD",
+//       LocalizedName: "Sudan",
+//     },
+//     AdministrativeArea: {
+//       ID: "KH",
+//       LocalizedName: "Khartoum",
+//     },
+//   },
+//   {
+//     Version: 1,
+//     Key: "318416",
+//     Type: "City",
+//     Rank: 20,
+//     LocalizedName: "Kampala",
+//     Country: {
+//       ID: "UG",
+//       LocalizedName: "Uganda",
+//     },
+//     AdministrativeArea: {
+//       ID: "102",
+//       LocalizedName: "Kampala",
+//     },
+//   },
+// ];
 
 //* React Toastify
 toast.configure();
@@ -214,7 +214,6 @@ function Home() {
       const { data } = await axios.get(
         `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${apiKey}&q=${cityName}`
       );
-      console.log(data);
       if (data.length === 0) return notifyCantFind();
       setFilteredList(data);
     } catch (error) {
@@ -229,12 +228,12 @@ function Home() {
       dispatch(setCityName("Tel Aviv"));
       return setUserTyping(false);
     }
-    const response = data.filter(search => {
-      return search.LocalizedName.toLowerCase().includes(cityName);
-    });
-    setFilteredList(response);
+    // const response = data.filter(search => {
+    //   return search.LocalizedName.toLowerCase().includes(cityName);
+    // });
+    // setFilteredList(response);
 
-    // getCities();
+    getCities();
   }, [cityName]);
 
   const chooseCity = chosenCity => {

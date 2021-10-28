@@ -7,12 +7,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav } from "react-bootstrap";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
 import { RiFahrenheitLine, RiCelsiusLine } from "react-icons/ri";
+import { BsLightbulb, BsLightbulbOff } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
-import { changeToCelsius, changeToFahrenheit } from "../actions/";
+import { changeToCelsius, changeToFahrenheit, setDarkMode } from "../actions/";
 
 function App() {
   const dispatch = useDispatch();
   const degreeCurrency = useSelector(state => state.degreeCurrency);
+  const isDarkMode = useSelector(state => state.darkMode);
 
   const changeDegreeCurrency = () => {
     if (degreeCurrency === "Celsius") {
@@ -23,6 +25,16 @@ function App() {
     return dispatch(changeToCelsius());
   };
 
+  const changeDarkMode = () => {
+    if (isDarkMode === false) {
+      localStorage.setItem("darkMode", true);
+      return dispatch(setDarkMode());
+    }
+    localStorage.setItem("darkMode", false);
+    return dispatch(setDarkMode());
+  };
+
+  //* When app mounts, handle degree currency and dark mode.
   useEffect(() => {
     const userDegreeCurrency =
       localStorage.getItem("degreeCurrency") || "Celsius";
@@ -31,16 +43,35 @@ function App() {
     } else {
       dispatch(changeToFahrenheit());
     }
+    const darkMode = localStorage.getItem("darkMode") || false;
+    if (darkMode === "true") {
+      dispatch(setDarkMode());
+    }
   }, []);
+
   return (
     <div className="App">
-      <Navbar bg="light" expand="lg">
+      <Navbar
+        bg={isDarkMode ? "dark" : "light"}
+        expand="lg"
+        variant={isDarkMode ? "dark" : "light"}
+      >
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+            <div className="dark-mode-switch-button">
+              <BootstrapSwitchButton
+                checked={isDarkMode}
+                onlabel={<BsLightbulbOff />}
+                offlabel={<BsLightbulb />}
+                onstyle="outline-primary"
+                offstyle="outline-primary"
+                onChange={() => changeDarkMode()}
+              />
+            </div>
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="favorites">Favorites</Nav.Link>
-            <div className="switch-button">
+            <div className="degree-switch-button">
               <BootstrapSwitchButton
                 checked={degreeCurrency !== "Celsius"}
                 onlabel={<RiFahrenheitLine />}

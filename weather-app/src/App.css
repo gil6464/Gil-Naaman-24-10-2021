@@ -39,9 +39,13 @@ div {
 .today-container {
   min-height: 25%;
 }
-.switch-button {
+.degree-switch-button {
   position: absolute;
   right: 50px;
+}
+.dark-mode-switch-button {
+  position: absolute;
+  left: 100px;
 }
 .add-to-favorites {
   margin-left: auto;
@@ -57,5 +61,12 @@ div {
 }
 .favorites {
   justify-content: center;
+  text-align: center;
+}
+.dark-mode {
+  background-color: #0c0b0b;
+  color: #777777;
+}
+h1 {
   text-align: center;
 }

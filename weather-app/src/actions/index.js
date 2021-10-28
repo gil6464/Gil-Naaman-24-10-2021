@@ -23,3 +23,9 @@ export const setCityName = cityName => {
     payload: cityName,
   };
 };
+
+export const setDarkMode = () => {
+  return {
+    type: "SET_DARK_MODE",
+  };
+};
