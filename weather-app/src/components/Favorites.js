@@ -83,7 +83,6 @@ function Favorites() {
     const favoritesList = JSON.parse(
       localStorage.getItem("favoritesCities") || []
     );
-    // if (favoritesList.length <= 0) return;
     const citiesData = favoritesList.map(async city => {
       city.currentWeather = await getCurrentWeather(city.cityKey);
       return city;
