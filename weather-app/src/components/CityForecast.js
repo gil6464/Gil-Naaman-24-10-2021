@@ -6,7 +6,7 @@ import FiveDaysForecast from "./FiveDaysForecast";
 import { MdFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import { toast } from "react-toastify";
 
-const apiKey = "OGq6iamWHZpMSXsUHbd3CtTkpxl5UGhZ";
+const apiKey = "dPHLlW14K7TNVcKjCI01aujLm8oGJyZA";
 
 const calcCelsius = temp => {
   return Math.round((temp - 32) * (5 / 9));

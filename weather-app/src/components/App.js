@@ -36,6 +36,11 @@ function App() {
 
   //* When app mounts, handle degree currency and dark mode.
   useEffect(() => {
+    //* Solve some issues with local storage in production.
+    const favoritesCities = localStorage.getItem("favoritesCities");
+    if (!favoritesCities)
+      localStorage.setItem("favoritesCities", JSON.stringify([]));
+    console.log(favoritesCities);
     const userDegreeCurrency =
       localStorage.getItem("degreeCurrency") || "Celsius";
     if (userDegreeCurrency === "Celsius") {

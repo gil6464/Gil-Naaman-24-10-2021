@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setCityName, setCityKey } from "../actions";
-const apiKey = "OGq6iamWHZpMSXsUHbd3CtTkpxl5UGhZ";
+const apiKey = "dPHLlW14K7TNVcKjCI01aujLm8oGJyZA";
 
 //* React Toastify
 toast.configure();

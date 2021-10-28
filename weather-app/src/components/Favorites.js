@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 
-const apiKey = "OGq6iamWHZpMSXsUHbd3CtTkpxl5UGhZ";
+const apiKey = "dPHLlW14K7TNVcKjCI01aujLm8oGJyZA";
 
 const pictures = {
   snow: "https://ssl.gstatic.com/onebox/weather/48/snow.png",
