@@ -3,7 +3,6 @@ import axios from "axios";
 import { Container, Row, Col, InputGroup, FormControl } from "react-bootstrap";
 import CitiesList from "./CitiesList";
 import CityForecast from "./CityForecast";
-//* React Toastify
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -163,7 +162,42 @@ const data = [
   },
 ];
 
+//* React Toastify
 toast.configure();
+
+const notifyOnlyEnglish = () => {
+  toast.error("Only English Allowed!!", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+const notifyProbWithAPI = () => {
+  toast.error("There is a Problem with out service, Come back later.", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+const notifyCantFind = () => {
+  toast.warn("Cant find  city", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
 
 function Home() {
   const dispatch = useDispatch();
@@ -176,10 +210,17 @@ function Home() {
   const [userTyping, setUserTyping] = useState(false);
 
   const getCities = async () => {
-    const { data } = await axios.get(
-      `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${apiKey}&q=${cityName}`
-    );
-    setFilteredList(data);
+    try {
+      const { data } = await axios.get(
+        `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${apiKey}&q=${cityName}`
+      );
+      console.log(data);
+      if (data.length === 0) return notifyCantFind();
+      setFilteredList(data);
+    } catch (error) {
+      console.log(error);
+      notifyProbWithAPI();
+    }
   };
 
   useEffect(() => {
@@ -216,18 +257,6 @@ function Home() {
       return;
     }
     dispatch(setCityName(value));
-  };
-
-  const notifyOnlyEnglish = () => {
-    toast.error("Only English Allowed!!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
   };
 
   return (

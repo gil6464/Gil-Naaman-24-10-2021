@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setCityKey, setCityName } from "../actions";
-import { Redirect } from "react-router-dom";
+import { ImBin } from "react-icons/im";
+import { toast } from "react-toastify";
+
+import axios from "axios";
 
 const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
 const dataFromAPI = [
@@ -61,7 +64,19 @@ const getForecastImage = temp => {
 const getMockData = () => {
   return dataFromAPI;
 };
+toast.configure();
 
+const notifyProbWithAPI = () => {
+  toast.error("There is a Problem with out service, Come back later.", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
 function Favorites() {
   const dispatch = useDispatch();
 
@@ -70,16 +85,30 @@ function Favorites() {
   const [favoritesData, setFavoritesData] = useState([]);
   const [redirect, setRedirect] = useState(false);
 
+  const getCurrentWeather = async cityKey => {
+    try {
+      const { data } = await axios.get(
+        `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${apiKey}`
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+      notifyProbWithAPI();
+    }
+  };
+
   const redirectToHome = (cityKey, cityName) => {
     dispatch(setCityKey(cityKey));
     dispatch(setCityName(cityName));
     setRedirect(true);
   };
-  const getCurrentWeather = async cityKey => {
-    const { data } = await axios.get(
-      `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${apiKey}`
+
+  const removeFromFavorites = cityKey => {
+    const newFavoritesData = favoritesData.filter(
+      favorite => favorite.cityKey !== cityKey
     );
-    return data;
+    setFavoritesData(newFavoritesData);
+    localStorage.setItem("favoritesCities", JSON.stringify(newFavoritesData));
   };
 
   useEffect(() => {
@@ -121,6 +150,14 @@ function Favorites() {
                     {" "}
                     {city.cityName}
                   </Button>{" "}
+                  {
+                    <ImBin
+                      onClick={() => {
+                        console.log("remove");
+                        removeFromFavorites(city.cityKey);
+                      }}
+                    />
+                  }
                 </Col>
                 {degreeCurrency === "Celsius"
                   ? city.currentWeather[0].Temperature.Metric.Value + "C°"

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "../App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Favorites from "./Favorites";
+import "../App.css";
 import Home from "./Home";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import Favorites from "./Favorites";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Navbar, Nav } from "react-bootstrap";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
 import { RiFahrenheitLine, RiCelsiusLine } from "react-icons/ri";
-//* Redux
 import { useSelector, useDispatch } from "react-redux";
 import { changeToCelsius, changeToFahrenheit } from "../actions/";
 

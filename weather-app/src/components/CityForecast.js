@@ -4,6 +4,8 @@ import { Button, Container, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import FiveDaysForecast from "./FiveDaysForecast";
 import { MdFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
+import { toast } from "react-toastify";
+
 const apiKey = "KVtpG4o7CvFfDgGmJMNOwlTfjS8up9Pc";
 
 const currentWeatherData = [
@@ -295,6 +297,18 @@ const getForecastImage = temp => {
   return pictures.hot;
 };
 
+toast.configure();
+const notifyProbWithAPI = () => {
+  toast.error("There is a Problem with out service, Come back later.", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
 function CityForecast({ cityKey, cityName }) {
   //* Get the currency from redux;
   const degreeCurrency = useSelector(state => state.degreeCurrency);
@@ -305,17 +319,27 @@ function CityForecast({ cityKey, cityName }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const getCurrentWeather = async () => {
-    const { data } = await axios.get(
-      `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${apiKey}`
-    );
-    setCurrentWeather(data);
+    try {
+      const { data } = await axios.get(
+        `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}?apikey=${apiKey}`
+      );
+      setCurrentWeather(data);
+    } catch (error) {
+      console.log(error);
+      notifyProbWithAPI();
+    }
   };
 
   const getFiveDayForecast = async () => {
-    const { data } = await axios.get(
-      `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${apiKey}`
-    );
-    setFiveDayForecast(data);
+    try {
+      const { data } = await axios.get(
+        `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}?apikey=${apiKey}`
+      );
+      setFiveDayForecast(data);
+    } catch (error) {
+      console.log(error);
+      notifyProbWithAPI();
+    }
   };
 
   const findIfFavorite = () => {
